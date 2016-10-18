@@ -20,7 +20,7 @@ template <class ValType>
 class TVector
 {
 protected:
-  ValType *pVector;
+  ValType *pVector;//Память под вектор
   int Size;       // размер вектора
   int StartIndex; // индекс первого элемента вектора
 public:
@@ -59,24 +59,43 @@ public:
   }
 };
 
-template <class ValType>
+template <class ValType>//конструктор
 TVector<ValType>::TVector(int s, int si)
 {
+	if ((s<=0)||(s>MAX_VECTOR_SIZE)) throw invalid_argument("s");
+	if ((si < 0) || (si>MAX_VECTOR_SIZE))  throw invalid_argument("si");
+	Size = s;//размер вектора = переданый размер(не мб 0)
+	StartIndex = si;//индекс первого элемента вектора = переданый индекс(мб 0)
+	pVector = new ValType[Size];
+	if (pVector = NULL) throw invalid_argument("RAM");
 } /*-------------------------------------------------------------------------*/
 
 template <class ValType> //конструктор копирования
 TVector<ValType>::TVector(const TVector<ValType> &v)
 {
+	Size = v.Size;
+	StartIndex - v.StartIndex;
+	pVector = new ValType[Size];
+	for (int i = 0; i < Size; i++)
+		pVector[i] = v.pVector[i];
 } /*-------------------------------------------------------------------------*/
 
 template <class ValType>
 TVector<ValType>::~TVector()
 {
+	if (pVector != NULL) {
+		delete[]pVector;
+		pVector = NULL;
+	}
+	if (pVector) std::cout << "Error clean " << pVector << std::endl;
 } /*-------------------------------------------------------------------------*/
 
 template <class ValType> // доступ
 ValType& TVector<ValType>::operator[](int pos)
 {
+	if ((pos - StartIndex >= 0) && (pos - StartIndex < Size))
+		return pVector[pos - StartIndex];
+	else throw(pos);
 } /*-------------------------------------------------------------------------*/
 
 template <class ValType> // сравнение
