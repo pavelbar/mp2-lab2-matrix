@@ -64,7 +64,7 @@ TVector<ValType>::TVector(int s, int si)
 {
 	if ((s < 1) || (s > MAX_VECTOR_SIZE)) 
 		throw (s);
-	if ((si < 0) || (si >= MAX_VECTOR_SIZE)) 
+	if ((si < 0) || (si >= s)) 
 		throw(si);
 	Size = s;
 	StartIndex = si;
@@ -229,8 +229,6 @@ public:
 template <class ValType>
 TMatrix<ValType>::TMatrix(int s) : TVector<TVector<ValType> >(s)
 {
-	if (s > MAX_MATRIX_SIZE) throw (s);
-	if (StartIndex >= MAX_MATRIX_SIZE) throw(StartIndex);
 	for (int i = 0; i < s; i++)
 		pVector[i] = TVector<ValType>(s - i, i);
 } /*-------------------------------------------------------------------------*/
