@@ -64,7 +64,7 @@ TVector<ValType>::TVector(int s, int si)
 {
 	if ((s < 1) || (s > MAX_VECTOR_SIZE)) 
 		throw (s);
-	if ((si < 0) || (si >= s)) 
+	if ((si < 0) || (si >= MAX_VECTOR_SIZE))
 		throw(si);
 	Size = s;
 	StartIndex = si;
